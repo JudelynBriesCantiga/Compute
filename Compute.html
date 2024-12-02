@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grade Computation</title>
+    <link rel="stylesheet" href="Compute.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Grade Computation</h1>
+
+        <!-- Quizzes Section -->
+        <section>
+            <h2>Written Tasks (Quizzes)</h2>
+            <div class="input-group">
+                <label for="txtQuiz1">Quiz 1:</label>
+                <input type="number" id="txtQuiz1" placeholder="Score">
+                <input type="number" id="qRange1" placeholder="Total Items">
+            </div>
+            <div class="input-group">
+                <label for="txtQuiz2">Quiz 2:</label>
+                <input type="number" id="txtQuiz2" placeholder="Score">
+                <input type="number" id="qRange2" placeholder="Total Items">
+            </div>
+            <div class="input-group">
+                <label for="txtQuiz3">Quiz 3:</label>
+                <input type="number" id="txtQuiz3" placeholder="Score">
+                <input type="number" id="qRange3" placeholder="Total Items">
+            </div>
+            <button onclick="computeQuizzes()">Compute Quizzes</button>
+            <div class="output-group">
+                <label>Total Quizzes (%):</label>
+                <input type="text" id="txtTotalQuizzes" readonly>
+                <label>Weighted (20%):</label>
+                <input type="text" id="chkQuiz" readonly>
+            </div>
+        </section>
+
+        <!-- Performance Tasks Section -->
+        <section>
+            <h2>Performance Tasks</h2>
+            <div class="input-group">
+                <label for="txtPt1">Performance Task 1:</label>
+                <input type="number" id="txtPt1" placeholder="Score">
+                <input type="number" id="ptRange1" placeholder="Total Items">
+            </div>
+            <div class="input-group">
+                <label for="txtPt2">Performance Task 2:</label>
+                <input type="number" id="txtPt2" placeholder="Score">
+                <input type="number" id="ptRange2" placeholder="Total Items">
+            </div>
+            <div class="input-group">
+                <label for="txtPt3">Performance Task 3:</label>
+                <input type="number" id="txtPt3" placeholder="Score">
+                <input type="number" id="ptRange3" placeholder="Total Items">
+            </div>
+            <button onclick="computePerformanceTasks()">Compute Performance Tasks</button>
+            <div class="output-group">
+                <label>Total Performance (%):</label>
+                <input type="text" id="txtTotalPerformance" readonly>
+                <label>Weighted (20%):</label>
+                <input type="text" id="chkTask" readonly>
+            </div>
+        </section>
+
+        <!-- Exam Section -->
+        <section>
+            <h2>Periodical Exam</h2>
+            <div class="input-group">
+                <label for="txtExam">Exam:</label>
+                <input type="number" id="txtExam" placeholder="Score">
+                <input type="number" id="preRange" placeholder="Total Items">
+            </div>
+            <button onclick="computeExam()">Compute Exam</button>
+            <div class="output-group">
+                <label>Total Exam (%):</label>
+                <input type="text" id="txtTotalExam" readonly>
+                <label>Weighted (60%):</label>
+                <input type="text" id="chkExam" readonly>
+            </div>
+        </section>
+
+        <!-- Final Grade Section -->
+        <section>
+            <h2>Final Grade</h2>
+            <button onclick="computeGrade()">Compute Final Grade</button>
+            <div class="output-group">
+                <label>Final Grade:</label>
+                <input type="text" id="txtGrade" readonly>
+            </div>
+        </section>
+    </div>
+    <script>// Compute Quizzes
+function computeQuizzes() {
+    const q1 = parseInt(document.getElementById("txtQuiz1").value) || 0;
+    const q2 = parseInt(document.getElementById("txtQuiz2").value) || 0;
+    const q3 = parseInt(document.getElementById("txtQuiz3").value) || 0;
+    const rangeQ1 = parseInt(document.getElementById("qRange1").value) || 1;
+    const rangeQ2 = parseInt(document.getElementById("qRange2").value) || 1;
+    const rangeQ3 = parseInt(document.getElementById("qRange3").value) || 1;
+
+    const totalScore = q1 + q2 + q3;
+    const totalItems = rangeQ1 + rangeQ2 + rangeQ3;
+    const totalQuizzes = (totalScore / totalItems) * 100;
+    const weightedQuizzes = totalQuizzes * 0.2;
+
+    document.getElementById("txtTotalQuizzes").value = totalQuizzes.toFixed(2);
+    document.getElementById("chkQuiz").value = weightedQuizzes.toFixed(2);
+}
+
+// Compute Performance Tasks
+function computePerformanceTasks() {
+    const pt1 = parseInt(document.getElementById("txtPt1").value) || 0;
+    const pt2 = parseInt(document.getElementById("txtPt2").value) || 0;
+    const pt3 = parseInt(document.getElementById("txtPt3").value) || 0;
+    const rangePt1 = parseInt(document.getElementById("ptRange1").value) || 1;
+    const rangePt2 = parseInt(document.getElementById("ptRange2").value) || 1;
+    const rangePt3 = parseInt(document.getElementById("ptRange3").value) || 1;
+
+    const totalScore = pt1 + pt2 + pt3;
+    const totalItems = rangePt1 + rangePt2 + rangePt3;
+    const totalPerformance = (totalScore / totalItems) * 100;
+    const weightedPerformance = totalPerformance * 0.2;
+
+    document.getElementById("txtTotalPerformance").value = totalPerformance.toFixed(2);
+    document.getElementById("chkTask").value = weightedPerformance.toFixed(2);
+}
+
+// Compute Exam
+function computeExam() {
+    const examScore = parseInt(document.getElementById("txtExam").value) || 0;
+    const examRange = parseInt(document.getElementById("preRange").value) || 1;
+
+    const examTotal = (examScore / examRange) * 100;
+    const weightedExam = examTotal * 0.6;
+
+    document.getElementById("txtTotalExam").value = examTotal.toFixed(2);
+    document.getElementById("chkExam").value = weightedExam.toFixed(2);
+}
+
+// Compute Final Grade
+function computeGrade() {
+    const weightedQuizzes = parseFloat(document.getElementById("chkQuiz").value) || 0;
+    const weightedPerformance = parseFloat(document.getElementById("chkTask").value) || 0;
+    const weightedExam = parseFloat(document.getElementById("chkExam").value) || 0;
+
+    const finalGrade = weightedQuizzes + weightedPerformance + weightedExam;
+
+    document.getElementById("txtGrade").value = finalGrade.toFixed(2);
+}</script>
+</body>
+</html>
